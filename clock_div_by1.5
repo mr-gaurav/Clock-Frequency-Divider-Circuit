@@ -1,0 +1,14 @@
+`timescale 1ns/ 1ps
+module clock_div_by_1point5 (out, clear, clk);
+    output out;
+    input clear, clk;
+    wire t1, t2, t3, t4;
+    
+    mod3 i1(t1, clear, clk);
+    Dff_negedge i2 (.q(t2), .din(t1), .clear(clear), .clk(clk));
+    or (t3, t1, t2);  // t3 is clock div by 3
+    
+    Dff_bothedge i3 (.q(t4), .din(t3), .clear(clear), .clk(clk));
+    xor (out, t3, t4);
+     
+endmodule
